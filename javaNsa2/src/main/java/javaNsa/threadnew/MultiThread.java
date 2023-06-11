@@ -28,10 +28,13 @@ public class MultiThread {
             String content = new String(Files.readAllBytes(Paths.get("D:/kuliah(Amri)/Sem 6/Algoritma dan Struktur Data/Periode 2/tugasDuaNsa/Sorcerers Stone.txt")))
                     .toLowerCase().replaceAll("[^a-zA-Z.\\s'-]", "").replaceAll("[.]", " .");
             paragraphs = new ArrayList<>(Arrays.asList(content.split("\n")));
+            System.out.println("There are "+paragraphs.size()+" paragraphs in the document.");
         } catch (IOException ex) {
             Logger.getLogger(MultiThread.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        System.out.println("parallel processing start");
+        long start = System.currentTimeMillis();
         paragraphs.parallelStream().forEach(p -> {
             ArrayList<String> list = new ArrayList<>(Arrays.asList(p.split("\\s")));
             list.parallelStream().forEach(l -> {
@@ -43,8 +46,10 @@ public class MultiThread {
                 }
             });
         });
+        long duration = System.currentTimeMillis() - start;
+        System.out.println("parallel processing end in "+duration+" ms");
         
-        token.getWord();
+        // token.getWord();
         System.out.println("\nThere are "+token.getSentence()+" sentences in the document.");
         System.out.println("There are "+token.getSize()+" number of unique words in the document.");
         System.out.println("There are "+token.getSum()+" words in the document.");
